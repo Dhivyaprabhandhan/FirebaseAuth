@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "198899576650",
+    "project_id": "auth-firebase-de155",
+    "storage_bucket": "auth-firebase-de155.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198899576650:android:01b9373abd33a8a8b91bb3",
+        "android_client_info": {
+          "package_name": "com.awesometsproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "198899576650-2i12jv29to1roh140r1l8887nijaj5jn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6QDblcEDbUEW0Tk1sUYqZZC8xR5Q0OyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "198899576650-2i12jv29to1roh140r1l8887nijaj5jn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
