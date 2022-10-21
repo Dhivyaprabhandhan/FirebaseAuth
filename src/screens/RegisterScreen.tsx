@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,,
+  View,
 } from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
 import Toast from 'react-native-simple-toast';
