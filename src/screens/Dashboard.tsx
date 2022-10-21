@@ -59,7 +59,7 @@ const Dashboard = ({navigation}: Props) => {
       navigation.navigate('LoginScreen');
       // console.log('logOut');
     } catch (err) {
-      console.log('Sign Out Error', err.message);
+      console.log('Sign Out Error.', err.message);
     }
   };
 
