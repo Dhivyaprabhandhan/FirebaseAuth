@@ -1,22 +1,20 @@
 import auth from '@react-native-firebase/auth';
 import React, {memo, useState} from 'react';
 import {
-  Alert,
   Image,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View,,
 } from 'react-native';
+import {ActivityIndicator} from 'react-native-paper';
+import Toast from 'react-native-simple-toast';
 import Button from '../components/Button';
+import Logo from '../components/Logo';
 import TextInput from '../components/TextInput';
 import {theme} from '../core/theme';
 import {Navigation} from '../types';
-import {ActivityIndicator} from 'react-native-paper';
-import Toast from 'react-native-simple-toast';
-import LoginScreen from './LoginScreen';
-import Logo from '../components/Logo';
 
 type Props = {
   navigation: Navigation;
@@ -32,7 +30,8 @@ const RegisterScreen = ({navigation}: Props) => {
   const [isValidPassword, setValidPassword] = useState(false);
 
   const __emailValidation = text => {
-    let regex = /\S+@\S+\.\S+/;
+    let regex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (!text || text.length <= 0 || text === undefined) {
       setErrorEmail('Email required *');
       setValidEmail(true);
@@ -95,6 +94,7 @@ const RegisterScreen = ({navigation}: Props) => {
           source={require('../assets/arrow_back.png')}
         />
       </TouchableOpacity>
+      {/* <Background> */}
       <View style={{flex: 1, justifyContent: 'center'}}>
         <Text style={styles.header}>{'Create Account'}</Text>
         <View style={{alignItems: 'center'}}>

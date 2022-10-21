@@ -1,25 +1,21 @@
 import auth from '@react-native-firebase/auth';
 import React, {memo, useState} from 'react';
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useSelector} from 'react-redux';
-import BackButton from '../components/BackButton';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Toast from 'react-native-simple-toast';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import Logo from '../components/Logo';
 import TextInput from '../components/TextInput';
 import {theme} from '../core/theme';
-import {Navigation} from '../types';
 import {emailValidator, passwordValidator} from '../core/utils';
-import Toast from 'react-native-simple-toast';
+import {Navigation} from '../types';
 
 type Props = {
   navigation: Navigation;
 };
 
 const LoginScreen = ({navigation}: Props) => {
-  const userList = useSelector(state => state);
-  console.log('userlisttt111-->', userList);
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
 
@@ -50,9 +46,6 @@ const LoginScreen = ({navigation}: Props) => {
       const errMessage =
         'There is no user record corresponding to this identifier. The user may have been deleted.';
       Toast.showWithGravity(errMessage, Toast.SHORT, Toast.BOTTOM);
-      // alert(
-      //   'There is no user record corresponding to this identifier. The user may have been deleted.',
-      // );
     }
   };
 
@@ -68,7 +61,6 @@ const LoginScreen = ({navigation}: Props) => {
         value={email.value}
         onChangeText={text => {
           setEmail({value: text, error: ''});
-          console.log(text, '00000000000000000000000000'); //////////////////////..................................
         }}
         error={!!email.error}
         errorText={email.error}
@@ -91,8 +83,6 @@ const LoginScreen = ({navigation}: Props) => {
       <Button
         mode="contained"
         onPress={() => {
-          // let errEmail = 'Please enter valid email';
-          // let errPassword = 'Please enter valid password';
           console.log('emaillen--', email);
           if (
             email.value !== undefined &&
