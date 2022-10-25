@@ -9,6 +9,7 @@ import {
   Text,
   Title,
 } from 'react-native-paper';
+import { theme } from '../core/theme';
 
 const PostDetailScreen = ({navigation}) => {
   const [stopProgressBar, setStopProgressBar] = useState(true);
@@ -20,7 +21,7 @@ const PostDetailScreen = ({navigation}) => {
   }, []);
   const {id, title, body} = navigation.state.params;
   return (
-    <View>
+    <View style={{flex:1, backgroundColor:"#fff"}}>
       <Appbar.Header
         style={{
           flexDirection: 'row',
@@ -52,14 +53,14 @@ const PostDetailScreen = ({navigation}) => {
         </TouchableOpacity>
       </Appbar.Header>
       <Card>
-        <Card.Content>
+        <Card.Content style={styles.cardContentStyle}>
           <Title style={styles.titleStyle}>
             {`${id}. ${title?.toUpperCase()}`}
           </Title>
           <ProgressBar
             style={{height: 3}}
             progress={1}
-            color={Colors.lightBlueA700}
+            color={theme.colors.primary}
             indeterminate={stopProgressBar}
           />
           <Paragraph style={styles.bodyText}>{body}</Paragraph>
@@ -89,4 +90,12 @@ const styles = StyleSheet.create({
     height: 24,
     tintColor: '#fff',
   },
+  cardContentStyle:{
+    backgroundColor:theme.colors.background, 
+    borderWidth:1,
+    borderColor:"#dedede",
+    elevation:10,
+    marginHorizontal:10,
+    marginVertical:10
+  }
 });

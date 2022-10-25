@@ -7,6 +7,7 @@ import {ScrollView} from 'react-navigation';
 import {Navigation} from '../types';
 import TextInput from '../components/TextInput';
 import {theme} from '../core/theme';
+import { Card, Title, Paragraph } from 'react-native-paper';
 
 type Props = {
   navigation: Navigation;
@@ -131,10 +132,15 @@ const Dashboard = ({navigation}: Props) => {
               <TouchableOpacity
                 key={id}
                 onPress={() => navigation.navigate('PostDetailScreen', post)}
-                style={styles.TouchView}>
-                <Text style={styles.postText}>{`${
+                // style={styles.TouchView}
+                >
+                  <Card>
+                    <Title style={styles.TouchView}>{`${
+                  post.id}. ${post.title}`}</Title>
+                  </Card>
+                {/* <Text style={styles.postText}>{`${
                   post.id
-                }. ${post.title?.toUpperCase()}`}</Text>
+                }. ${post.title?.toUpperCase()}`}</Text> */}
               </TouchableOpacity>
             );
           })
@@ -196,6 +202,7 @@ export default memo(Dashboard);
 const styles = StyleSheet.create({
   ViewHeader: {
     flex: 1,
+    backgroundColor:"#fff"
   },
   TouchView: {
     marginHorizontal: 20,
@@ -207,10 +214,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primary,
     borderRadius: 20,
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 1,
-    shadowRadius: 3,
+    color:theme.colors.onSurface,
   },
   postText: {
     fontSize: 13,
