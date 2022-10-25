@@ -2,6 +2,7 @@ import auth from '@react-native-firebase/auth';
 import React, {memo, useState} from 'react';
 import {
   Image,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -21,9 +22,12 @@ type Props = {
 };
 
 const RegisterScreen = ({navigation}: Props) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fetching, setFetching] = useState(false);
+  const [errorName, setErrorName] = useState('');
+  const [isValidName, setValidName] = useState(false);
   const [errorEmail, setErrorEmail] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
   const [isValidEmail, setValidEmail] = useState(false);
@@ -57,15 +61,38 @@ const RegisterScreen = ({navigation}: Props) => {
       setErrorPassword('');
     }
   };
-
+  const _nameValidator = name => {
+    var regName = /^[A-Za-z]+$/
+    if (!name || name.length <= 0 || name === undefined) {
+      setErrorName('Please enter your name *');
+      setValidName(true);
+      return;
+    }
+    else if(!regName.test(name)){
+      setErrorName('Please enter valid name *');
+      setValidName(true);
+      return; 
+    }
+    else if (name.length > 20) {
+      setErrorName('Name is too long *');
+      setValidName(true);
+      return;
+    }
+    else {
+      setValidName(false);
+      setErrorName('');
+    }
+  }
   const __doCreateUser = async (email, password) => {
     const SuccessMessage = 'Account created successfully';
     try {
+      console.log("try block executed")
       if (email.trim().length == 0) {
         setErrorEmail('Email required *');
       } else if (password.trim().length == 0) {
         setErrorPassword('Password required *');
       } else {
+        console.log("else part executed")
         let response = await auth().createUserWithEmailAndPassword(
           email,
           password,
@@ -85,9 +112,11 @@ const RegisterScreen = ({navigation}: Props) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, marginHorizontal: 20}}>
+    <SafeAreaView style={styles.safeAreaViewStyle}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('LoginScreen')}
+        onPress={() => {
+          console.log('presss');
+          navigation.navigate('LoginScreen')}}
         style={styles.container}>
         <Image
           style={styles.image}
@@ -105,6 +134,22 @@ const RegisterScreen = ({navigation}: Props) => {
         </View>
 
         <View style={{marginTop: 40}}>
+        <TextInput
+            label="Name"
+            returnKeyType="next"
+            value={name}
+            onChangeText={text => {
+              _nameValidator(text);
+              setErrorName;
+              setName(text);
+            }}
+            error={isValidName}
+            errorText={errorName}
+            autoCapitalize='words'
+            textContentType="name"
+            keyboardType="default"
+            selectionColor={theme.colors.primary}
+          />
           <TextInput
             label="Email"
             returnKeyType="next"
@@ -174,5 +219,11 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
     position: 'absolute',
+    // backgroundColor:"red"
   },
+  safeAreaViewStyle:{
+    flex: 1, 
+    marginHorizontal: 20, 
+    marginTop: Platform.OS == 'ios'? 30 : 0
+  }
 });
