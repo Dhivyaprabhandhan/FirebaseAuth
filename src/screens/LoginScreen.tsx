@@ -19,7 +19,7 @@ const LoginScreen = ({navigation}: Props) => {
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
 
-  const _onLoginPressed = async (email, password) => {
+  const onLoginPressed = async (email, password) => {
     console.log('email--', email, 'password--', password);
     if (email) {
       const emailError = emailValidator(email);
@@ -89,9 +89,9 @@ const LoginScreen = ({navigation}: Props) => {
             email.value.length > 3 &&
             password.value.length > 3
           ) {
-            _onLoginPressed(email.value.trim(), password.value.trim()); ////////////////------------------------------
+            onLoginPressed(email.value.trim(), password.value.trim()); ////////////////------------------------------
           } else {
-            _onLoginPressed('a', 'b');
+            onLoginPressed('a', 'b');
           }
         }}>
         Login

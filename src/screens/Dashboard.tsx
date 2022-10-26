@@ -54,11 +54,10 @@ const Dashboard = ({navigation}: Props) => {
   if (initializing) {
     return null;
   }
-  const _onLogOutPressed = async () => {
+  const onLogOutPressed = async () => {
     try {
       await firebase.auth().signOut();
       navigation.navigate('LoginScreen');
-      // console.log('logOut');
     } catch (err) {
       console.log('Sign Out Error.', err.message);
     }
@@ -69,19 +68,16 @@ const Dashboard = ({navigation}: Props) => {
       let filteredPosts = posts.filter(post => {
         return post.title.toLowerCase().includes(searchQuery.toLowerCase());
       });
-
       setFilteredObj(filteredPosts);
-      setPosts(filteredObj);
     } else if (searchQuery === '') {
-      // alert();
       setFilteredObj(posts);
     }
   };
 
   return (
     <View style={styles.ViewHeader}>
-      <Appbar.Header style={{flexDirection: 'row', justifyContent: 'center'}}>
-        <Appbar.Content style={{alignItems: 'center'}} title="POST LIST" />
+      <Appbar.Header style={styles.headerStyles}>
+        <Appbar.Content style={styles.contentStyle} title="POST LIST" />
         <TouchableOpacity
           style={{}}
           onPress={() => {
@@ -91,10 +87,10 @@ const Dashboard = ({navigation}: Props) => {
                 onPress: () => navigation.navigate('Dashboard'),
                 style: 'cancel',
               },
-              {text: 'OK', onPress: () => _onLogOutPressed()},
+              {text: 'OK', onPress: () => onLogOutPressed()},
             ]);
           }}>
-          <Text style={{color: '#fff', right: 10}}>LOGOUT</Text>
+          <Text style={styles.logoutText}>LOGOUT</Text>
         </TouchableOpacity>
       </Appbar.Header>
       <View style={styles.viewStyle}>
@@ -113,56 +109,35 @@ const Dashboard = ({navigation}: Props) => {
           }}
           onPress={searchFilterFunction}>
           <Image
-            style={{
-              height: 20,
-              width: 20,
-              tintColor: theme.colors.primary,
-              position: 'absolute',
-              right: 20,
-            }}
+            style={styles.imageStyle}
             source={require('../assets/search.png')}
           />
         </TouchableOpacity>
       </View>
       <ScrollView>
-        {/* {posts.length <= 0 ? ( */}
         {filteredObj.length > 0 ? (
           filteredObj.map((post, id) => {
             return (
               <TouchableOpacity
                 key={id}
-                onPress={() => navigation.navigate('PostDetailScreen', post)}
-                // style={styles.TouchView}
-                >
+                onPress={() => navigation.navigate('PostDetailScreen', post)}>
                   <Card>
                     <Title style={styles.TouchView}>{`${
                   post.id}. ${post.title}`}</Title>
                   </Card>
-                {/* <Text style={styles.postText}>{`${
-                  post.id
-                }. ${post.title?.toUpperCase()}`}</Text> */}
               </TouchableOpacity>
             );
           })
         ) : filteredObj.length == 0 ? (
           <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: '60%',
-            }}>
+            style={styles.aiView}>
             <ActivityIndicator color={theme.colors.primary} />
             <Image
               source={require('../assets/box.png')}
-              style={{height: 150, width: 150, tintColor: theme.colors.primary}}
+              style={styles.boxStyle}
             />
             <Text
-              style={{
-                color: theme.colors.primary,
-                fontSize: 15,
-                fontWeight: 'bold',
-              }}>
+              style={styles.ndfText}>
               {'No Data Found !'}
             </Text>
           </View>
@@ -171,22 +146,13 @@ const Dashboard = ({navigation}: Props) => {
         ) : (
           error && (
             <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: '60%',
-              }}>
+              style={styles.errorView}>
               <Image
-                style={{height: 100, width: 100}}
+                style={styles.errorImage}
                 source={require('../assets/cloud.png')}
               />
               <Text
-                style={{
-                  color: theme.colors.primary,
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                }}>
+                style={styles.errorText}>
                 {error}
               </Text>
             </View>
@@ -229,4 +195,53 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: 'space-evenly',
   },
+  headerStyles:{
+    flexDirection: 'row', 
+    justifyContent: 'center'
+  },
+  contentStyle:{
+    alignItems: 'center'
+  },
+  logoutText:{
+    color: '#fff', 
+    right: 10
+  },
+  imageStyle:{
+    height: 20,
+    width: 20,
+    tintColor: theme.colors.primary,
+    position: 'absolute',
+    right: 20,
+  },
+  ndfText:{
+    color: theme.colors.primary,
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  aiView:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '60%',
+  },
+  boxStyle:{
+    height: 150, 
+    width: 150, 
+    tintColor: theme.colors.primary
+  },
+  errorView:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '60%',
+  },
+  errorImage:{
+    height: 100, 
+    width: 100
+  },
+  errorText:{
+    color: theme.colors.primary,
+    fontSize: 15,
+    fontWeight: 'bold',
+  }
 });

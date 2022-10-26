@@ -33,7 +33,7 @@ const RegisterScreen = ({navigation}: Props) => {
   const [isValidEmail, setValidEmail] = useState(false);
   const [isValidPassword, setValidPassword] = useState(false);
 
-  const __emailValidation = text => {
+  const emailValidation = text => {
     let regex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (!text || text.length <= 0 || text === undefined) {
@@ -47,7 +47,7 @@ const RegisterScreen = ({navigation}: Props) => {
       setErrorEmail('');
     }
   };
-  const __passwordValidation = text => {
+  const passwordValidation = text => {
     if (!text || text.length <= 0 || text === undefined) {
       setErrorPassword('Password required *');
       setValidPassword(true);
@@ -61,7 +61,7 @@ const RegisterScreen = ({navigation}: Props) => {
       setErrorPassword('');
     }
   };
-  const _nameValidator = name => {
+  const nameValidator = name => {
     var regName = /^[A-Za-z]+$/
     if (!name || name.length <= 0 || name === undefined) {
       setErrorName('Please enter your name *');
@@ -83,7 +83,7 @@ const RegisterScreen = ({navigation}: Props) => {
       setErrorName('');
     }
   }
-  const __doCreateUser = async (email, password) => {
+  const doCreateUser = async (email, password) => {
     const SuccessMessage = 'Account created successfully';
     try {
       console.log("try block executed")
@@ -97,7 +97,9 @@ const RegisterScreen = ({navigation}: Props) => {
           email,
           password,
         );
+        console.log("response---",response)
         if (response && response.user) {
+          console.log("11111111")
           setFetching(true);
           // console.log('response', response, 'response---->', response.user);
           navigation.navigate('LoginScreen');
@@ -105,6 +107,7 @@ const RegisterScreen = ({navigation}: Props) => {
         }
       }
     } catch (e) {
+      console.log("222222")
       const errMessage =
         'The email address is already in use by another account.';
       Toast.showWithGravity(errMessage, Toast.SHORT, Toast.BOTTOM);
@@ -139,7 +142,7 @@ const RegisterScreen = ({navigation}: Props) => {
             returnKeyType="next"
             value={name}
             onChangeText={text => {
-              _nameValidator(text);
+              nameValidator(text);
               setErrorName;
               setName(text);
             }}
@@ -155,7 +158,7 @@ const RegisterScreen = ({navigation}: Props) => {
             returnKeyType="next"
             value={email}
             onChangeText={text => {
-              __emailValidation(text);
+              emailValidation(text);
               setErrorEmail;
               setEmail(text);
             }}
@@ -175,7 +178,7 @@ const RegisterScreen = ({navigation}: Props) => {
             style={{fontSize: 14}}
             selectionColor={theme.colors.primary}
             onChangeText={text => {
-              __passwordValidation(text);
+              passwordValidation(text);
               setPassword(text);
             }}
             error={isValidPassword}
@@ -187,7 +190,7 @@ const RegisterScreen = ({navigation}: Props) => {
           style={{marginBottom: 20}}
           mode="contained"
           onPress={() => {
-            __doCreateUser(email, password);
+            doCreateUser(email, password);
           }}>
           SIGN UP
         </Button>

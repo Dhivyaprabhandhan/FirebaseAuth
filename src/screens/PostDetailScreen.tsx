@@ -23,11 +23,7 @@ const PostDetailScreen = ({navigation}) => {
   return (
     <View style={{flex:1, backgroundColor:"#fff"}}>
       <Appbar.Header
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginLeft: 10,
-        }}>
+        style={styles.headerStyle}>
         <TouchableOpacity
           onPress={() => navigation.pop()}
           style={styles.container}>
@@ -38,7 +34,6 @@ const PostDetailScreen = ({navigation}) => {
         </TouchableOpacity>
         <Appbar.Content style={{alignItems: 'center'}} title="POST DETAIL" />
         <TouchableOpacity
-          style={{}}
           onPress={() => {
             Alert.alert('LOGOUT', 'Do you wish to logout ?', [
               {
@@ -49,7 +44,7 @@ const PostDetailScreen = ({navigation}) => {
               {text: 'OK', onPress: () => navigation.navigate('LoginScreen')},
             ]);
           }}>
-          <Text style={{color: '#fff', right: 10}}>LOGOUT</Text>
+          <Text style={styles.logoutText}>LOGOUT</Text>
         </TouchableOpacity>
       </Appbar.Header>
       <Card>
@@ -97,5 +92,14 @@ const styles = StyleSheet.create({
     elevation:10,
     marginHorizontal:10,
     marginVertical:10
+  },
+  headerStyle:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginLeft: 10,
+  },
+  logoutText:{
+    color: '#fff', 
+    right: 10
   }
 });
